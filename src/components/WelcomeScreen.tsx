@@ -17,8 +17,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
           </div>
           
           <p className="text-purple-200 mb-8 text-lg leading-relaxed">
-            Un jeu intime et amusant conçu spécialement pour les couples qui souhaitent 
-            découvrir de nouveaux aspects de leur relation et partager des moments complices.
+            Un jeu intime et amusant conçu spécialement pour ne pas avoir de limites commes les autres applications disponibles. Du lourd, vous allez transpirer !.
           </p>
           
           <div className="bg-amber-900/30 border border-amber-500/50 rounded-lg p-4 mb-8">
