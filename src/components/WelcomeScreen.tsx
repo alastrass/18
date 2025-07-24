@@ -40,6 +40,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
           
           <p className="text-purple-300 text-xs mt-6">
             En continuant, vous confirmez être majeur(e) et consentant(e)
+            Jeu en cours de développement par : Jérôme Joly - 2025
           </p>
         </div>
       </div>
