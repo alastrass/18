@@ -20,15 +20,15 @@ const GameSelection: React.FC<GameSelectionProps> = ({ onGameSelect }) => {
       duration: '15-30 min'
     },
     {
-      id: 'new-game' as GameType,
-      title: 'Nouveau Jeu',
-      description: 'Un nouveau jeu passionnant arrive bientôt ! Restez connectés pour découvrir cette nouvelle expérience.',
+      id: 'kiffe-ou-kiffe-pas' as GameType,
+      title: 'Kiffe ou Kiffe Pas ?',
+      description: 'Découvrez vos affinités secrètes ! Swipez sur des phrases intimes et révélez vos matchs uniquement quand vous êtes sur la même longueur d\'onde.',
       icon: Sparkles,
       color: 'from-amber-600 to-orange-600',
       borderColor: 'border-amber-500/30',
-      available: false,
+      available: true,
       players: '2+ joueurs',
-      duration: 'Bientôt'
+      duration: '10-20 min'
     }
   ];
 

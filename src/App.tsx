@@ -4,6 +4,7 @@ import WelcomeScreen from './components/WelcomeScreen';
 import AgeVerification from './components/AgeVerification';
 import GameSelection from './components/GameSelection';
 import TruthOrDareGame from './components/TruthOrDareGame';
+import KiffeOuKiffePasGame from './components/KiffeOuKiffePasGame';
 import PWAInstallPrompt from './components/PWAInstallPrompt';
 
 function App() {
@@ -51,8 +52,8 @@ function App() {
     return <TruthOrDareGame onBack={handleBackToGameSelection} />;
   }
 
-  if (appState === 'new-game') {
-    return <div>Nouveau jeu en développement...</div>;
+  if (appState === 'kiffe-ou-kiffe-pas') {
+    return <KiffeOuKiffePasGame onBack={handleBackToGameSelection} />;
   }
 
   return (
