@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Users, ArrowLeft, Plus, Play, Wifi, Copy, Check, X, ThumbsUp, ThumbsDown, Sparkles, Trophy, SkipForward, List, ChevronDown } from 'lucide-react';
+import { Heart, Users, ArrowLeft, Plus, Play, Wifi, Copy, Check, X, ThumbsUp, ThumbsDown, Sparkles, Trophy, SkipForward, List, ChevronDown, Home } from 'lucide-react';
 import { KiffeGameState, KiffeSession, KiffePhrase, SwipeDirection } from '../types';
 import { defaultKiffePhrases } from '../data/kiffePhases';
 
@@ -277,6 +277,15 @@ const KiffeOuKiffePasGame: React.FC<KiffeOuKiffePasGameProps> = ({ onBack }) => 
             >
               {sessionMode === 'create' ? 'Créer la session' : 'Rejoindre'}
             </button>
+            
+            {/* Return to Temple */}
+            <button
+              onClick={onBack}
+              className="w-full mt-3 bg-slate-600 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 mobile-button touch-action-none flex items-center justify-center gap-2"
+            >
+              <Home className="w-4 h-4" />
+              Retour au Temple
+            </button>
           </div>
         </div>
       </div>
@@ -288,9 +297,21 @@ const KiffeOuKiffePasGame: React.FC<KiffeOuKiffePasGameProps> = ({ onBack }) => 
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 px-4 py-8 safe-area-inset">
         <div className="max-w-md mx-auto">
+          {/* Header with Temple Return */}
+          <div className="flex items-center justify-between mb-6">
+            <button
+              onClick={onBack}
+              className="flex items-center gap-2 px-3 py-2 bg-slate-700 active:bg-slate-800 text-white rounded-lg transition-colors mobile-button touch-action-none"
+            >
+              <Home className="w-4 h-4" />
+              <span className="text-sm">Temple</span>
+            </button>
+            <h2 className="text-lg font-bold text-white">Personnalisation</h2>
+            <div className="w-16"></div>
+          </div>
+          
           <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 shadow-2xl border border-purple-500/20">
             <div className="text-center mb-6">
-              <h2 className="text-xl font-bold text-white mb-2">Personnalisez votre jeu</h2>
               <p className="text-purple-200 text-sm">Ajoutez vos propres phrases secrètes (optionnel)</p>
             </div>
 
@@ -384,17 +405,31 @@ const KiffeOuKiffePasGame: React.FC<KiffeOuKiffePasGameProps> = ({ onBack }) => 
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 px-4 py-8 safe-area-inset">
         <div className="max-w-md mx-auto">
           {/* Header */}
+          <div className="flex items-center justify-between mb-6">
+            <button
+              onClick={onBack}
+              className="flex items-center gap-2 px-3 py-2 bg-slate-700 active:bg-slate-800 text-white rounded-lg transition-colors mobile-button touch-action-none"
+            >
+              <Home className="w-4 h-4" />
+              <span className="text-sm">Temple</span>
+            </button>
+            <div className="text-center">
+              <h1 className="text-lg font-bold text-white">Kiffe ou Kiffe Pas ?</h1>
+              <p className="text-purple-200 text-xs">
+                {currentPhraseIndex + 1} / {session.phrases.length} • {matches.length} matchs
+              </p>
+            </div>
+            <div className="w-16"></div>
+          </div>
+          
+          {/* Progress and Timer */}
           <div className="text-center mb-6">
-            <h1 className="text-xl font-bold text-white mb-2">Kiffe ou Kiffe Pas ?</h1>
             <div className="bg-slate-700 rounded-full h-2 mb-2">
               <div 
                 className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
-            <p className="text-purple-200 text-sm">
-              {currentPhraseIndex + 1} / {session.phrases.length} • {matches.length} matchs
-            </p>
           </div>
 
           {/* Current Phrase */}
@@ -569,8 +604,9 @@ const KiffeOuKiffePasGame: React.FC<KiffeOuKiffePasGameProps> = ({ onBack }) => 
               </button>
               <button
                 onClick={onBack}
-                className="w-full bg-slate-600 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 mobile-button touch-action-none"
+                className="w-full bg-slate-600 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 mobile-button touch-action-none flex items-center justify-center gap-2"
               >
+                <Home className="w-4 h-4" />
                 Retour au Temple
               </button>
             </div>
