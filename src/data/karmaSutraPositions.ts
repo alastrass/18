@@ -34,7 +34,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Allongés sur le côté, l'un derrière l'autre",
     difficulty: "facile",
     illustration: "👫🛌",
-    imageUrl: "", // Vous pouvez ajouter le lien ici
+    imageUrl: "https://mak3r.fun/wp-content/uploads/2025/07/cuillere.jpeg", // Vous pouvez ajouter le lien ici
     benefits: ["Confort", "Tendresse", "Accès aux caresses"]
   },
   {
@@ -43,7 +43,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Partenaire en arc, position acrobatique",
     difficulty: "difficile",
     illustration: "👩‍🤸‍♀️👨",
-    imageUrl: "", // Vous pouvez ajouter le lien ici
+    imageUrl: "https://mak3r.fun/wp-content/uploads/2025/07/pont.avif", // Vous pouvez ajouter le lien ici
     benefits: ["Flexibilité", "Nouveauté", "Stimulation unique"]
   },
   {
@@ -52,7 +52,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Jambes écartées, bras étendus",
     difficulty: "moyen",
     illustration: "👩‍🤸‍♀️⭐👨",
-    imageUrl: "", // Vous pouvez ajouter le lien ici
+    imageUrl: "https://mak3r.fun/wp-content/uploads/2025/07/etoiledemer.avif", // Vous pouvez ajouter le lien ici
     benefits: ["Ouverture totale", "Vulnérabilité", "Accès complet"]
   },
   {
@@ -61,7 +61,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Au bord du lit, partenaire debout",
     difficulty: "moyen",
     illustration: "👩🛏️👨🧍",
-    imageUrl: "", // Vous pouvez ajouter le lien ici
+    imageUrl: "https://mak3r.fun/wp-content/uploads/2025/07/papillon.jpg", // Vous pouvez ajouter le lien ici
     benefits: ["Angle différent", "Contrôle masculin", "Stimulation G"]
   },
   {
