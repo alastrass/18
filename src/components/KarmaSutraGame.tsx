@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, SkipForward, Volume2, VolumeX, ArrowLeft, Clock, Trophy, Heart } from 'lucide-react';
+import { Play, Pause, SkipForward, Volume2, VolumeX, ArrowLeft, Clock, Trophy, Heart, List, X } from 'lucide-react';
 import { KarmaSutraGameState, KarmaSutraSession, KarmaSutraPosition } from '../types';
 import { karmaSutraPositions } from '../data/karmaSutraPositions';
 
@@ -20,6 +20,7 @@ const KarmaSutraGame: React.FC<KarmaSutraGameProps> = ({ onBack }) => {
   
   const [currentPosition, setCurrentPosition] = useState<KarmaSutraPosition | null>(null);
   const [showWarning, setShowWarning] = useState(false);
+  const [showPositionSelector, setShowPositionSelector] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
 
@@ -113,6 +114,26 @@ const KarmaSutraGame: React.FC<KarmaSutraGameProps> = ({ onBack }) => {
     startSession();
   };
 
+  // Jump to specific position
+  const jumpToPosition = (positionIndex: number) => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+    
+    const selectedPosition = karmaSutraPositions[positionIndex];
+    const timeLimit = getRandomTime();
+    
+    setCurrentPosition(selectedPosition);
+    setSession(prev => ({
+      ...prev,
+      timeRemaining: timeLimit,
+      isPlaying: true,
+      currentPositionIndex: positionIndex
+    }));
+    setGameState('playing');
+    setShowWarning(false);
+    setShowPositionSelector(false);
+  };
   // Toggle pause/play
   const togglePause = () => {
     setSession(prev => ({ ...prev, isPlaying: !prev.isPlaying }));
@@ -358,6 +379,24 @@ const KarmaSutraGame: React.FC<KarmaSutraGameProps> = ({ onBack }) => {
           </div>
 
           {/* Controls */}
+          <div className="flex justify-center gap-3 mb-6">
+            <button
+              onClick={() => setShowPositionSelector(true)}
+              className="flex items-center gap-2 px-4 py-3 bg-slate-600 active:bg-slate-700 text-white rounded-xl transition-colors mobile-button touch-action-none"
+            >
+              <List className="w-5 h-5" />
+              <span className="text-sm">Choisir</span>
+            </button>
+            <button
+              onClick={skipPosition}
+              className="flex items-center gap-2 px-4 py-3 bg-orange-600 active:bg-orange-700 text-white rounded-xl transition-colors mobile-button touch-action-none"
+            >
+              <SkipForward className="w-5 h-5" />
+              <span className="text-sm">Passer</span>
+            </button>
+          </div>
+
+          {/* Main Controls */}
           <div className="flex justify-center gap-4">
             <button
               onClick={togglePause}
@@ -366,14 +405,6 @@ const KarmaSutraGame: React.FC<KarmaSutraGameProps> = ({ onBack }) => {
               {gameState === 'playing' ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
               <span>{gameState === 'playing' ? 'Pause' : 'Reprendre'}</span>
             </button>
-            
-            <button
-              onClick={skipPosition}
-              className="flex items-center gap-2 px-6 py-4 bg-slate-600 active:bg-slate-700 text-white rounded-xl transition-colors mobile-button touch-action-none"
-            >
-              <SkipForward className="w-5 h-5" />
-              <span>Passer</span>
-            </button>
           </div>
 
           {gameState === 'paused' && (
@@ -381,6 +412,88 @@ const KarmaSutraGame: React.FC<KarmaSutraGameProps> = ({ onBack }) => {
               <p className="text-orange-300 text-sm">
                 Session en pause • Appuyez sur Reprendre pour continuer
               </p>
+            </div>
+          )}
+
+          {/* Position Selector Modal */}
+          {showPositionSelector && (
+            <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+              <div className="bg-slate-800 rounded-2xl p-6 max-w-2xl w-full max-h-[80vh] overflow-hidden">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-white font-semibold text-lg">Choisir une position</h3>
+                  <button
+                    onClick={() => setShowPositionSelector(false)}
+                    className="text-slate-400 hover:text-white transition-colors"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
+                
+                <div className="overflow-y-auto max-h-96 space-y-3">
+                  {karmaSutraPositions.map((position, index) => (
+                    <button
+                      key={position.id}
+                      onClick={() => jumpToPosition(index)}
+                      className={`w-full text-left p-4 rounded-lg transition-all duration-200 ${
+                        index === session.currentPositionIndex
+                          ? 'bg-orange-600 text-white border-2 border-orange-400'
+                          : session.usedPositions.includes(index)
+                          ? 'bg-slate-700/50 text-slate-300 border border-slate-600'
+                          : 'bg-slate-700 text-white hover:bg-slate-600 border border-slate-600'
+                      }`}
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className="text-4xl flex-shrink-0">{position.illustration}</div>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <h4 className="font-semibold text-lg">{position.name}</h4>
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                              position.difficulty === 'facile' 
+                                ? 'bg-green-500/20 text-green-300 border border-green-500/30'
+                                : position.difficulty === 'moyen'
+                                ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30'
+                                : 'bg-red-500/20 text-red-300 border border-red-500/30'
+                            }`}>
+                              {position.difficulty.charAt(0).toUpperCase() + position.difficulty.slice(1)}
+                            </span>
+                          </div>
+                          <p className="text-sm opacity-80 mb-2">
+                            {position.description}
+                          </p>
+                          <div className="flex flex-wrap gap-1">
+                            {position.benefits.slice(0, 3).map((benefit, benefitIndex) => (
+                              <span key={benefitIndex} className="text-xs bg-slate-600/50 px-2 py-1 rounded">
+                                {benefit}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {index === session.currentPositionIndex && (
+                        <div className="flex items-center gap-1 mt-3 pt-3 border-t border-orange-400/30">
+                          <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+                          <span className="text-xs text-orange-300">Position actuelle</span>
+                        </div>
+                      )}
+                      
+                      {session.usedPositions.includes(index) && index !== session.currentPositionIndex && (
+                        <div className="flex items-center gap-1 mt-3 pt-3 border-t border-slate-600">
+                          <div className="w-2 h-2 bg-slate-400 rounded-full"></div>
+                          <span className="text-xs text-slate-400">Déjà explorée</span>
+                        </div>
+                      )}
+                    </button>
+                  ))}
+                </div>
+                
+                <div className="mt-4 pt-4 border-t border-slate-700">
+                  <div className="flex items-center justify-between text-slate-400 text-xs">
+                    <span>{karmaSutraPositions.length} positions disponibles</span>
+                    <span>Session #{session.sessionCount}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
