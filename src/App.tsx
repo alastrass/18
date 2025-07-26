@@ -190,23 +190,23 @@ function App() {
 
   if (gameState === 'game') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <div className="container mx-auto px-4 py-6 max-w-4xl">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 safe-area-inset">
+        <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 max-w-4xl">
           {/* Header */}
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Heart className="w-8 h-8 text-rose-400" />
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+              <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-rose-400" />
               <div className="text-center">
-                <h1 className="text-3xl md:text-4xl font-bold text-white">Action ou Vérité</h1>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">Action ou Vérité</h1>
                 {playMode === 'remote' && sessionCode && (
-                  <p className="text-amber-300 text-sm mt-1">Session: {sessionCode}</p>
+                  <p className="text-amber-300 text-xs sm:text-sm mt-1">Session: {sessionCode}</p>
                 )}
               </div>
-              <Heart className="w-8 h-8 text-rose-400" />
+              <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-rose-400" />
             </div>
-            <p className="text-purple-200 text-lg">Mode {category === 'soft' ? 'Soft' : 'Intense'}</p>
+            <p className="text-purple-200 text-base sm:text-lg">Mode {category === 'soft' ? 'Soft' : 'Intense'}</p>
             {playMode === 'remote' && (
-              <p className="text-amber-200 text-sm">🌐 Jeu à distance</p>
+              <p className="text-amber-200 text-xs sm:text-sm">🌐 Jeu à distance</p>
             )}
           </div>
 
@@ -214,20 +214,20 @@ function App() {
           <ScoreBoard players={players} currentPlayerIndex={currentPlayerIndex} />
 
           {/* Game Controls */}
-          <div className="flex flex-wrap gap-4 justify-center mb-8">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-6 sm:mb-8 px-2 sm:px-0">
             <button
               onClick={resetGame}
-              className="flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition-colors"
+              className="flex items-center justify-center gap-2 px-4 py-3 bg-amber-600 active:bg-amber-700 text-white rounded-lg transition-colors mobile-button touch-action-none"
             >
               <RotateCcw className="w-4 h-4" />
-              Nouveau Round
+              <span className="text-sm sm:text-base">Nouveau Round</span>
             </button>
             <button
               onClick={restartCompletely}
-              className="flex items-center gap-2 px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg transition-colors"
+              className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-600 active:bg-slate-700 text-white rounded-lg transition-colors mobile-button touch-action-none"
             >
               <Users className="w-4 h-4" />
-              Recommencer
+              <span className="text-sm sm:text-base">Recommencer</span>
             </button>
           </div>
 
@@ -250,11 +250,11 @@ function App() {
           />
 
           {/* Footer */}
-          <footer className="text-center mt-12 pt-8 border-t border-purple-800">
-            <p className="text-purple-300 text-sm">
+          <footer className="text-center mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-purple-800">
+            <p className="text-purple-300 text-xs sm:text-sm">
               Jeu créé par <span className="font-semibold text-amber-400">Jérôme Joly</span>
             </p>
-            <p className="text-purple-400 text-xs mt-2">
+            <p className="text-purple-400 text-xs mt-1 sm:mt-2">
               Contenu exclusivement destiné aux adultes consentants (18+)
             </p>
           </footer>
