@@ -6,7 +6,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "Le Lotus",
     description: "Position assise face à face, jambes entrelacées",
     difficulty: "facile",
-    illustration: "👫🪷",
+    illustration: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.feter-recevoir.com%2Fjeu-54-cartes-a-jouer-position-kamasutra-comic%2F&psig=AOvVaw2ou2yoz3r1c7tlF9i-n0Ma&ust=1753657525685000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCOD6wOLR244DFQAAAAAdAAAAABAE",
     benefits: ["Intimité maximale", "Contact visuel", "Contrôle partagé"]
   },
   {
