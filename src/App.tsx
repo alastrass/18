@@ -10,6 +10,7 @@ import RemoteGameSetup from './components/RemoteGameSetup';
 import GameBoard from './components/GameBoard';
 import WheelSpinner from './components/WheelSpinner';
 import ScoreBoard from './components/ScoreBoard';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
 
 function App() {
   const [gameState, setGameState] = useState<GameState | 'mode-selection' | 'remote-setup'>('welcome');
@@ -259,6 +260,9 @@ function App() {
             </p>
           </footer>
         </div>
+        
+        {/* PWA Install Prompt */}
+        <PWAInstallPrompt />
       </div>
     );
   }

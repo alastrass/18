@@ -1,11 +1,21 @@
 import React from 'react';
-import { Heart, Play } from 'lucide-react';
+import { Heart, Play, Download, Smartphone } from 'lucide-react';
+import { usePWA } from '../hooks/usePWA';
 
 interface WelcomeScreenProps {
   onStart: () => void;
 }
 
 const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
+  const { isInstallable, isInstalled, installApp } = usePWA();
+
+  const handleInstall = async () => {
+    const success = await installApp();
+    if (success) {
+      console.log('Application installée avec succès');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center px-4 py-8 safe-area-inset">
       <div className="max-w-sm w-full text-center">
@@ -38,6 +48,28 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
             <Play className="w-5 h-5" />
             Commencer à jouer
           </button>
+          
+          {/* PWA Install Button */}
+          {isInstallable && !isInstalled && (
+            <button
+              onClick={handleInstall}
+              className="w-full mt-3 bg-gradient-to-r from-amber-600 to-orange-600 active:from-amber-700 active:to-orange-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 shadow-lg active:shadow-xl flex items-center justify-center gap-3 mobile-button touch-action-none"
+            >
+              <Download className="w-4 h-4" />
+              Installer l'application
+            </button>
+          )}
+          
+          {isInstalled && (
+            <div className="mt-3 bg-green-900/30 border border-green-500/50 rounded-lg p-3">
+              <div className="flex items-center justify-center gap-2">
+                <Smartphone className="w-4 h-4 text-green-400" />
+                <p className="text-green-200 text-xs font-medium">
+                  Application installée !
+                </p>
+              </div>
+            </div>
+          )}
           
           <p className="text-purple-300 text-xs mt-4 sm:mt-6">
             En continuant, vous confirmez être majeur(e) et consentant(e)
