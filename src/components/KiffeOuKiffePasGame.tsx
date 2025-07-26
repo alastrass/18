@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Users, ArrowLeft, Plus, Play, Wifi, Copy, Check, X, ThumbsUp, ThumbsDown, Sparkles, Trophy } from 'lucide-react';
+import { Heart, Users, ArrowLeft, Plus, Play, Wifi, Copy, Check, X, ThumbsUp, ThumbsDown, Sparkles, Trophy, SkipForward, List, ChevronDown } from 'lucide-react';
 import { KiffeGameState, KiffeSession, KiffePhrase, SwipeDirection } from '../types';
 import { defaultKiffePhrases } from '../data/kiffePhases';
 
@@ -21,6 +21,7 @@ const KiffeOuKiffePasGame: React.FC<KiffeOuKiffePasGameProps> = ({ onBack }) => 
   const [matches, setMatches] = useState<KiffePhrase[]>([]);
   const [copied, setCopied] = useState(false);
   const [isPlayer1, setIsPlayer1] = useState(true);
+  const [showPhraseSelector, setShowPhraseSelector] = useState(false);
 
   const generateSessionCode = () => {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -146,6 +147,22 @@ const KiffeOuKiffePasGame: React.FC<KiffeOuKiffePasGameProps> = ({ onBack }) => 
     } else {
       setGameState('results');
     }
+  };
+
+  const skipPhrase = () => {
+    if (!session) return;
+    
+    // Passer à la phrase suivante sans enregistrer de réponse
+    if (currentPhraseIndex < session.phrases.length - 1) {
+      setCurrentPhraseIndex(prev => prev + 1);
+    } else {
+      setGameState('results');
+    }
+  };
+
+  const jumpToPhrase = (index: number) => {
+    setCurrentPhraseIndex(index);
+    setShowPhraseSelector(false);
   };
 
   const copyToClipboard = async () => {
@@ -392,6 +409,24 @@ const KiffeOuKiffePasGame: React.FC<KiffeOuKiffePasGameProps> = ({ onBack }) => 
             </div>
           </div>
 
+          {/* Controls */}
+          <div className="flex justify-center gap-3 mb-6">
+            <button
+              onClick={() => setShowPhraseSelector(true)}
+              className="bg-slate-600 active:bg-slate-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 shadow-lg flex items-center gap-2 mobile-button touch-action-none"
+            >
+              <List className="w-5 h-5" />
+              <span className="text-sm">Choisir</span>
+            </button>
+            <button
+              onClick={skipPhrase}
+              className="bg-orange-600 active:bg-orange-700 text-white font-medium py-3 px-4 rounded-xl transition-all duration-200 shadow-lg flex items-center gap-2 mobile-button touch-action-none"
+            >
+              <SkipForward className="w-5 h-5" />
+              <span className="text-sm">Passer</span>
+            </button>
+          </div>
+
           {/* Swipe Buttons */}
           <div className="grid grid-cols-2 gap-4">
             <button
@@ -413,6 +448,72 @@ const KiffeOuKiffePasGame: React.FC<KiffeOuKiffePasGameProps> = ({ onBack }) => 
           <p className="text-purple-300 text-xs text-center mt-6">
             Swipez selon vos préférences. Les matchs seront révélés à la fin !
           </p>
+
+          {/* Phrase Selector Modal */}
+          {showPhraseSelector && (
+            <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+              <div className="bg-slate-800 rounded-2xl p-6 max-w-md w-full max-h-[80vh] overflow-hidden">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-white font-semibold text-lg">Choisir une phrase</h3>
+                  <button
+                    onClick={() => setShowPhraseSelector(false)}
+                    className="text-slate-400 hover:text-white transition-colors"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
+                
+                <div className="overflow-y-auto max-h-96 space-y-2">
+                  {session?.phrases.map((phrase, index) => (
+                    <button
+                      key={phrase.id}
+                      onClick={() => jumpToPhrase(index)}
+                      className={`w-full text-left p-3 rounded-lg transition-all duration-200 ${
+                        index === currentPhraseIndex
+                          ? 'bg-purple-600 text-white'
+                          : index < currentPhraseIndex
+                          ? 'bg-slate-700/50 text-slate-300'
+                          : 'bg-slate-700 text-white hover:bg-slate-600'
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <span className="text-xs bg-slate-600 text-slate-300 px-2 py-1 rounded-full flex-shrink-0 mt-0.5">
+                          {index + 1}
+                        </span>
+                        <p className="text-sm leading-relaxed">
+                          {phrase.text.length > 80 ? `${phrase.text.substring(0, 80)}...` : phrase.text}
+                        </p>
+                      </div>
+                      {index === currentPhraseIndex && (
+                        <div className="flex items-center gap-1 mt-2">
+                          <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+                          <span className="text-xs text-purple-300">Position actuelle</span>
+                        </div>
+                      )}
+                      {index < currentPhraseIndex && playerResponses[phrase.id] && (
+                        <div className="flex items-center gap-1 mt-2">
+                          {playerResponses[phrase.id] === 'kiffe' ? (
+                            <ThumbsUp className="w-3 h-3 text-green-400" />
+                          ) : (
+                            <ThumbsDown className="w-3 h-3 text-red-400" />
+                          )}
+                          <span className="text-xs text-slate-400">
+                            {playerResponses[phrase.id] === 'kiffe' ? 'Kiffé' : 'Pas kiffé'}
+                          </span>
+                        </div>
+                      )}
+                    </button>
+                  ))}
+                </div>
+                
+                <div className="mt-4 pt-4 border-t border-slate-700">
+                  <p className="text-slate-400 text-xs text-center">
+                    {session?.phrases.length} phrases au total • {matches.length} matchs trouvés
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
