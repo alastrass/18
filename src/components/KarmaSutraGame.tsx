@@ -343,7 +343,24 @@ const KarmaSutraGame: React.FC<KarmaSutraGameProps> = ({ onBack }) => {
           {/* Position Display */}
           <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-orange-500/20 mb-8">
             <div className="text-center">
-              <div className="text-8xl mb-6">{currentPosition.illustration}</div>
+              {/* Image ou Illustration */}
+              {currentPosition.imageUrl ? (
+                <div className="mb-6">
+                  <img 
+                    src={currentPosition.imageUrl} 
+                    alt={currentPosition.name}
+                    className="w-80 h-80 object-cover rounded-2xl mx-auto shadow-2xl border-2 border-orange-500/30"
+                    onError={(e) => {
+                      // Fallback vers l'emoji si l'image ne charge pas
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.nextElementSibling!.style.display = 'block';
+                    }}
+                  />
+                  <div className="text-8xl mb-6 hidden">{currentPosition.illustration}</div>
+                </div>
+              ) : (
+                <div className="text-8xl mb-6">{currentPosition.illustration}</div>
+              )}
               
               <h2 className="text-3xl font-bold text-white mb-4">
                 {currentPosition.name}
@@ -443,7 +460,24 @@ const KarmaSutraGame: React.FC<KarmaSutraGameProps> = ({ onBack }) => {
                       }`}
                     >
                       <div className="flex items-start gap-4">
-                        <div className="text-4xl flex-shrink-0">{position.illustration}</div>
+                        {/* Image miniature ou emoji */}
+                        <div className="flex-shrink-0">
+                          {position.imageUrl ? (
+                            <img 
+                              src={position.imageUrl} 
+                              alt={position.name}
+                              className="w-16 h-16 object-cover rounded-lg border border-orange-500/30"
+                              onError={(e) => {
+                                // Fallback vers l'emoji si l'image ne charge pas
+                                e.currentTarget.style.display = 'none';
+                                e.currentTarget.nextElementSibling!.style.display = 'block';
+                              }}
+                            />
+                          ) : null}
+                          <div className={`text-4xl ${position.imageUrl ? 'hidden' : ''}`}>
+                            {position.illustration}
+                          </div>
+                        </div>
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2">
                             <h4 className="font-semibold text-lg">{position.name}</h4>

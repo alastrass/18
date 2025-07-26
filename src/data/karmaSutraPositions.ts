@@ -7,6 +7,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Position assise face à face, jambes entrelacées",
     difficulty: "facile",
     illustration: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.feter-recevoir.com%2Fjeu-54-cartes-a-jouer-position-kamasutra-comic%2F&psig=AOvVaw2ou2yoz3r1c7tlF9i-n0Ma&ust=1753657525685000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCOD6wOLR244DFQAAAAAdAAAAABAE",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Intimité maximale", "Contact visuel", "Contrôle partagé"]
   },
   {
@@ -15,6 +16,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Partenaire au-dessus, contrôle total",
     difficulty: "facile",
     illustration: "👩‍❤️‍👨🔝",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Contrôle féminin", "Stimulation profonde", "Angle optimal"]
   },
   {
@@ -23,6 +25,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Position classique avec jambes surélevées",
     difficulty: "facile",
     illustration: "👨‍❤️‍👩⬆️",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Pénétration profonde", "Intimité", "Facilité d'exécution"]
   },
   {
@@ -31,6 +34,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Allongés sur le côté, l'un derrière l'autre",
     difficulty: "facile",
     illustration: "👫🛌",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Confort", "Tendresse", "Accès aux caresses"]
   },
   {
@@ -39,6 +43,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Partenaire en arc, position acrobatique",
     difficulty: "difficile",
     illustration: "👩‍🤸‍♀️👨",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Flexibilité", "Nouveauté", "Stimulation unique"]
   },
   {
@@ -47,6 +52,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Jambes écartées, bras étendus",
     difficulty: "moyen",
     illustration: "👩‍🤸‍♀️⭐👨",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Ouverture totale", "Vulnérabilité", "Accès complet"]
   },
   {
@@ -55,6 +61,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Au bord du lit, partenaire debout",
     difficulty: "moyen",
     illustration: "👩🛏️👨🧍",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Angle différent", "Contrôle masculin", "Stimulation G"]
   },
   {
@@ -63,6 +70,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Position assise surélevée",
     difficulty: "moyen",
     illustration: "👩‍👑🪑👨",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Domination", "Visibilité", "Contrôle du rythme"]
   },
   {
@@ -71,6 +79,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Corps entrelacés en spirale",
     difficulty: "difficile",
     illustration: "👫🌀🐍",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Flexibilité", "Contact maximal", "Sensualité"]
   },
   {
@@ -79,6 +88,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Jambes hautes et écartées",
     difficulty: "moyen",
     illustration: "👩‍🤸‍♀️🦅👨",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Pénétration profonde", "Ouverture", "Intensité"]
   },
   {
@@ -87,6 +97,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Position à quatre pattes modifiée",
     difficulty: "moyen",
     illustration: "👩‍🦽🐅👨",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Instinct animal", "Profondeur", "Contrôle"]
   },
   {
@@ -95,6 +106,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Suspendue ou appuyée",
     difficulty: "difficile",
     illustration: "👩‍🤸‍♀️🌿👨🧍",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Aventure", "Force", "Nouveauté"]
   },
   {
@@ -103,6 +115,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Renaissance de la passion",
     difficulty: "moyen",
     illustration: "👫🔥🦅",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Renouveau", "Intensité", "Transformation"]
   },
   {
@@ -111,6 +124,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Mouvement circulaire et rotation",
     difficulty: "difficile",
     illustration: "👫🌀💫",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Mouvement unique", "Stimulation variée", "Créativité"]
   },
   {
@@ -119,6 +133,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Délicate et raffinée",
     difficulty: "facile",
     illustration: "👫🌺💕",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Délicatesse", "Beauté", "Sensibilité"]
   },
   {
@@ -127,6 +142,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Puissante et dominante",
     difficulty: "difficile",
     illustration: "👨‍🦲🐉👩‍🦰",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Puissance", "Domination", "Intensité"]
   },
   {
@@ -135,6 +151,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Fluide et naturelle",
     difficulty: "moyen",
     illustration: "👫💧🌊",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Fluidité", "Naturel", "Harmonie"]
   },
   {
@@ -143,6 +160,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Union parfaite des corps",
     difficulty: "moyen",
     illustration: "👫🌙✨",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Union totale", "Mystère", "Harmonie"]
   },
   {
@@ -151,6 +169,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Explosive et passionnée",
     difficulty: "difficile",
     illustration: "👫🌋💥",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Passion", "Explosion", "Intensité"]
   },
   {
@@ -159,6 +178,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Précieuse et délicate",
     difficulty: "facile",
     illustration: "👫🦪💎",
+    imageUrl: "", // Vous pouvez ajouter le lien ici
     benefits: ["Préciosité", "Délicatesse", "Raffinement"]
   }
 ];

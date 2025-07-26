@@ -84,6 +84,7 @@ export interface KarmaSutraPosition {
   description: string;
   difficulty: 'facile' | 'moyen' | 'difficile';
   illustration: string; // SVG or emoji representation
+  imageUrl?: string; // URL de l'image illustrative
   benefits: string[];
 }
 
