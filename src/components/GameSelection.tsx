@@ -30,6 +30,18 @@ const GameSelection: React.FC<GameSelectionProps> = ({ onGameSelect }) => {
       players: '2+ joueurs',
       duration: '10-20 min'
     }
+    ,
+    {
+      id: 'karma-sutra' as GameType,
+      title: 'Karma ? Sutra !',
+      description: 'Explorez l\'art de l\'amour avec un guide chronométré des positions du Kamasutra. Rotation automatique et signaux audio pour une expérience immersive.',
+      icon: Heart,
+      color: 'from-red-600 to-orange-600',
+      borderColor: 'border-red-500/30',
+      available: true,
+      players: '2 joueurs',
+      duration: 'Illimité'
+    }
   ];
 
   return (

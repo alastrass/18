@@ -1,6 +1,6 @@
 export type AppState = 'welcome' | 'age-verification' | 'game-selection' | 'truth-or-dare' | 'new-game';
 
-export type GameType = 'truth-or-dare' | 'kiffe-ou-kiffe-pas';
+export type GameType = 'truth-or-dare' | 'kiffe-ou-kiffe-pas' | 'karma-sutra';
 
 export type GameState = 'mode-selection' | 'setup' | 'remote-setup' | 'playing';
 
@@ -76,3 +76,24 @@ export interface KiffeSession {
 export type KiffeGameState = 'session-setup' | 'adding-phrases' | 'waiting-partner' | 'playing' | 'results';
 
 export type SwipeDirection = 'kiffe' | 'kiffe-pas';
+
+// Karma Sutra types
+export interface KarmaSutraPosition {
+  id: number;
+  name: string;
+  description: string;
+  difficulty: 'facile' | 'moyen' | 'difficile';
+  illustration: string; // SVG or emoji representation
+  benefits: string[];
+}
+
+export type KarmaSutraGameState = 'welcome' | 'playing' | 'paused' | 'finished';
+
+export interface KarmaSutraSession {
+  currentPositionIndex: number;
+  usedPositions: number[];
+  sessionCount: number;
+  timeRemaining: number;
+  isPlaying: boolean;
+  soundEnabled: boolean;
+}
