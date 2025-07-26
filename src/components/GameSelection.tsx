@@ -41,6 +41,17 @@ const GameSelection: React.FC<GameSelectionProps> = ({ onGameSelect }) => {
       available: true,
       players: '2 joueurs',
       duration: 'Illimité'
+    },
+    {
+      id: 'puzzle' as GameType,
+      title: 'Puzzle !',
+      description: 'Créez des puzzles personnalisés avec vos propres images ! Un joueur crée le puzzle, l\'autre le résout. Parfait pour défier votre partenaire.',
+      icon: Sparkles,
+      color: 'from-blue-600 to-cyan-600',
+      borderColor: 'border-blue-500/30',
+      available: true,
+      players: '2 joueurs',
+      duration: '10-30 min'
     }
   ];
 

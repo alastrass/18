@@ -1,6 +1,7 @@
 export type AppState = 'welcome' | 'age-verification' | 'game-selection' | 'truth-or-dare' | 'new-game';
 
 export type GameType = 'truth-or-dare' | 'kiffe-ou-kiffe-pas' | 'karma-sutra';
+export type GameType = 'truth-or-dare' | 'kiffe-ou-kiffe-pas' | 'karma-sutra' | 'puzzle';
 
 export type GameState = 'mode-selection' | 'setup' | 'remote-setup' | 'playing';
 
@@ -98,3 +99,45 @@ export interface KarmaSutraSession {
   isPlaying: boolean;
   soundEnabled: boolean;
 }
+
+// Puzzle Game types
+export interface PuzzlePiece {
+  id: number;
+  correctX: number;
+  correctY: number;
+  currentX: number;
+  currentY: number;
+  imageData: string; // Base64 image data for the piece
+  isPlaced: boolean;
+  width: number;
+  height: number;
+}
+
+export interface PuzzleSession {
+  code: string;
+  creator: {
+    id: string;
+    name: string;
+    connected: boolean;
+  };
+  solver?: {
+    id: string;
+    name: string;
+    connected: boolean;
+  };
+  originalImage: string; // Base64 image data
+  gridSize: number; // 3 for 3x3, 4 for 4x4, etc.
+  pieces: PuzzlePiece[];
+  isCompleted: boolean;
+  state: 'waiting' | 'playing' | 'completed';
+  startTime?: number;
+  endTime?: number;
+}
+
+export type PuzzleGameState = 'session-setup' | 'image-selection' | 'waiting-player' | 'playing' | 'completed';
+
+export type PuzzleDifficulty = {
+  gridSize: number;
+  label: string;
+  pieces: number;
+};

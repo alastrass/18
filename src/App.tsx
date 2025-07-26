@@ -6,6 +6,7 @@ import GameSelection from './components/GameSelection';
 import TruthOrDareGame from './components/TruthOrDareGame';
 import KiffeOuKiffePasGame from './components/KiffeOuKiffePasGame';
 import KarmaSutraGame from './components/KarmaSutraGame';
+import PuzzleGame from './components/PuzzleGame';
 import PWAInstallPrompt from './components/PWAInstallPrompt';
 
 function App() {
@@ -59,6 +60,10 @@ function App() {
 
   if (appState === 'karma-sutra') {
     return <KarmaSutraGame onBack={handleBackToGameSelection} />;
+  }
+
+  if (appState === 'puzzle') {
+    return <PuzzleGame onBack={handleBackToGameSelection} />;
   }
 
   return (
