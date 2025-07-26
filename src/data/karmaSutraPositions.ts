@@ -16,7 +16,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     description: "Partenaire au-dessus, contrôle total",
     difficulty: "facile",
     illustration: "👩‍❤️‍👨🔝",
-    imageUrl: "", // Vous pouvez ajouter le lien ici
+    imageUrl: "https://mak3r.fun/wp-content/uploads/2025/07/amazone.avif", // Vous pouvez ajouter le lien ici
     benefits: ["Contrôle féminin", "Stimulation profonde", "Angle optimal"]
   },
   {
