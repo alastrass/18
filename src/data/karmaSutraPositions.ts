@@ -6,7 +6,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "Le Lotus",
     description: "Position assise face à face, jambes entrelacées",
     difficulty: "facile",
-    illustration: "🪷",
+    illustration: "👫🪷",
     benefits: ["Intimité maximale", "Contact visuel", "Contrôle partagé"]
   },
   {
@@ -14,7 +14,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "L'Amazone",
     description: "Partenaire au-dessus, contrôle total",
     difficulty: "facile",
-    illustration: "👑",
+    illustration: "👩‍❤️‍👨🔝",
     benefits: ["Contrôle féminin", "Stimulation profonde", "Angle optimal"]
   },
   {
@@ -22,7 +22,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "Le Missionnaire Élevé",
     description: "Position classique avec jambes surélevées",
     difficulty: "facile",
-    illustration: "🌟",
+    illustration: "👨‍❤️‍👩⬆️",
     benefits: ["Pénétration profonde", "Intimité", "Facilité d'exécution"]
   },
   {
@@ -30,7 +30,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "La Cuillère",
     description: "Allongés sur le côté, l'un derrière l'autre",
     difficulty: "facile",
-    illustration: "🥄",
+    illustration: "👫🛌",
     benefits: ["Confort", "Tendresse", "Accès aux caresses"]
   },
   {
@@ -38,7 +38,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "Le Pont",
     description: "Partenaire en arc, position acrobatique",
     difficulty: "difficile",
-    illustration: "🌉",
+    illustration: "👩‍🤸‍♀️👨",
     benefits: ["Flexibilité", "Nouveauté", "Stimulation unique"]
   },
   {
@@ -46,7 +46,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "L'Étoile de Mer",
     description: "Jambes écartées, bras étendus",
     difficulty: "moyen",
-    illustration: "⭐",
+    illustration: "👩‍🤸‍♀️⭐👨",
     benefits: ["Ouverture totale", "Vulnérabilité", "Accès complet"]
   },
   {
@@ -54,7 +54,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "Le Papillon",
     description: "Au bord du lit, partenaire debout",
     difficulty: "moyen",
-    illustration: "🦋",
+    illustration: "👩🛏️👨🧍",
     benefits: ["Angle différent", "Contrôle masculin", "Stimulation G"]
   },
   {
@@ -62,7 +62,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "La Déesse",
     description: "Position assise surélevée",
     difficulty: "moyen",
-    illustration: "🔥",
+    illustration: "👩‍👑🪑👨",
     benefits: ["Domination", "Visibilité", "Contrôle du rythme"]
   },
   {
@@ -70,7 +70,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "Le Serpent",
     description: "Corps entrelacés en spirale",
     difficulty: "difficile",
-    illustration: "🐍",
+    illustration: "👫🌀🐍",
     benefits: ["Flexibilité", "Contact maximal", "Sensualité"]
   },
   {
@@ -78,7 +78,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "L'Aigle",
     description: "Jambes hautes et écartées",
     difficulty: "moyen",
-    illustration: "🦅",
+    illustration: "👩‍🤸‍♀️🦅👨",
     benefits: ["Pénétration profonde", "Ouverture", "Intensité"]
   },
   {
@@ -86,7 +86,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "Le Tigre",
     description: "Position à quatre pattes modifiée",
     difficulty: "moyen",
-    illustration: "🐅",
+    illustration: "👩‍🦽🐅👨",
     benefits: ["Instinct animal", "Profondeur", "Contrôle"]
   },
   {
@@ -94,7 +94,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "La Liane",
     description: "Suspendue ou appuyée",
     difficulty: "difficile",
-    illustration: "🌿",
+    illustration: "👩‍🤸‍♀️🌿👨🧍",
     benefits: ["Aventure", "Force", "Nouveauté"]
   },
   {
@@ -102,7 +102,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "Le Phénix",
     description: "Renaissance de la passion",
     difficulty: "moyen",
-    illustration: "🔥",
+    illustration: "👫🔥🦅",
     benefits: ["Renouveau", "Intensité", "Transformation"]
   },
   {
@@ -110,7 +110,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "La Spirale",
     description: "Mouvement circulaire et rotation",
     difficulty: "difficile",
-    illustration: "🌀",
+    illustration: "👫🌀💫",
     benefits: ["Mouvement unique", "Stimulation variée", "Créativité"]
   },
   {
@@ -118,7 +118,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "L'Orchidée",
     description: "Délicate et raffinée",
     difficulty: "facile",
-    illustration: "🌺",
+    illustration: "👫🌺💕",
     benefits: ["Délicatesse", "Beauté", "Sensibilité"]
   },
   {
@@ -126,7 +126,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "Le Dragon",
     description: "Puissante et dominante",
     difficulty: "difficile",
-    illustration: "🐉",
+    illustration: "👨‍🦲🐉👩‍🦰",
     benefits: ["Puissance", "Domination", "Intensité"]
   },
   {
@@ -134,7 +134,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "La Cascade",
     description: "Fluide et naturelle",
     difficulty: "moyen",
-    illustration: "💧",
+    illustration: "👫💧🌊",
     benefits: ["Fluidité", "Naturel", "Harmonie"]
   },
   {
@@ -142,7 +142,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "L'Éclipse",
     description: "Union parfaite des corps",
     difficulty: "moyen",
-    illustration: "🌙",
+    illustration: "👫🌙✨",
     benefits: ["Union totale", "Mystère", "Harmonie"]
   },
   {
@@ -150,7 +150,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "Le Volcan",
     description: "Explosive et passionnée",
     difficulty: "difficile",
-    illustration: "🌋",
+    illustration: "👫🌋💥",
     benefits: ["Passion", "Explosion", "Intensité"]
   },
   {
@@ -158,7 +158,7 @@ export const karmaSutraPositions: KarmaSutraPosition[] = [
     name: "La Perle",
     description: "Précieuse et délicate",
     difficulty: "facile",
-    illustration: "🦪",
+    illustration: "👫🦪💎",
     benefits: ["Préciosité", "Délicatesse", "Raffinement"]
   }
 ];
