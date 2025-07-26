@@ -229,7 +229,9 @@ const PlayerSetup: React.FC<PlayerSetupProps> = ({ onComplete, initialCustomChal
                       }`}>
                         {challenge.type === 'truth' ? 'Vérité' : 'Action'}
                       </span>
-                      <span className="text-white text-sm">{challenge.text}</span>
+                      <span className="text-purple-300 text-sm italic">
+                        Défi personnalisé masqué - sera révélé pendant le jeu
+                      </span>
                     </div>
                     <button
                       onClick={() => handleRemoveCustomChallenge(challenge.id)}
