@@ -29,7 +29,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
           </div>
           
           <p className="text-purple-200 mb-6 text-base sm:text-lg leading-relaxed">
-            Un jeu intime et amusant conçu spécialement pour ne pas avoir de limites comme les autres applications disponibles. Du lourd, vous allez transpirer !
+            Plusieurs jeux intimes conçus spécialement pour ne pas avoir de limites comme les autres applications disponibles. Du lourd, vous allez transpirer !
           </p>
           
           <div className="bg-amber-900/30 border border-amber-500/50 rounded-lg p-3 sm:p-4 mb-6 sm:mb-8">
