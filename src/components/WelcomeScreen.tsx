@@ -25,7 +25,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onStart }) => {
               <Heart className="w-8 h-8 sm:w-12 sm:h-12 text-rose-400" />
               <Heart className="w-8 h-8 sm:w-12 sm:h-12 text-rose-400" />
             </div>
-            <h1 className="text-2xl sm:text-4xl font-bold text-white text-center leading-tight">Action ou Vérité</h1>
+            <h1 className="text-2xl sm:text-4xl font-bold text-white text-center leading-tight">Le temple des plaisirs...</h1>
           </div>
           
           <p className="text-purple-200 mb-6 text-base sm:text-lg leading-relaxed">
