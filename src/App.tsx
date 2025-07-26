@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, Users, Trophy, RotateCcw, Check, X, Plus } from 'lucide-react';
-import { GameState, Player, Challenge, Category } from './types';
+import { GameState, Player, Challenge, Category, PlayMode } from './types';
 import { challenges } from './data/challenges';
+import PlayModeSelection from './components/PlayModeSelection';
 import WelcomeScreen from './components/WelcomeScreen';
 import AgeVerification from './components/AgeVerification';
 import PlayerSetup from './components/PlayerSetup';
+import RemoteGameSetup from './components/RemoteGameSetup';
 import GameBoard from './components/GameBoard';
 import WheelSpinner from './components/WheelSpinner';
 import ScoreBoard from './components/ScoreBoard';
 
 function App() {
-  const [gameState, setGameState] = useState<GameState>('welcome');
+  const [gameState, setGameState] = useState<GameState | 'mode-selection' | 'remote-setup'>('welcome');
   const [isAgeVerified, setIsAgeVerified] = useState(false);
+  const [playMode, setPlayMode] = useState<PlayMode>('local');
   const [players, setPlayers] = useState<Player[]>([]);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [category, setCategory] = useState<Category>('soft');
@@ -20,6 +23,7 @@ function App() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [showWheel, setShowWheel] = useState(false);
   const [customChallenges, setCustomChallenges] = useState<Challenge[]>([]);
+  const [sessionCode, setSessionCode] = useState('');
 
   // Load data from localStorage
   useEffect(() => {
@@ -56,7 +60,16 @@ function App() {
   const handleAgeVerification = (verified: boolean) => {
     setIsAgeVerified(verified);
     if (verified) {
+      setGameState('mode-selection');
+    }
+  };
+
+  const handleModeSelection = (mode: PlayMode) => {
+    setPlayMode(mode);
+    if (mode === 'local') {
       setGameState('setup');
+    } else {
+      setGameState('remote-setup');
     }
   };
 
@@ -64,6 +77,14 @@ function App() {
     setPlayers(setupPlayers);
     setCategory(selectedCategory);
     setCustomChallenges(customs);
+    setGameState('game');
+  };
+
+  const handleRemotePlayersSetup = (setupPlayers: Player[], selectedCategory: Category, customs: Challenge[], code: string) => {
+    setPlayers(setupPlayers);
+    setCategory(selectedCategory);
+    setCustomChallenges(customs);
+    setSessionCode(code);
     setGameState('game');
   };
 
@@ -126,12 +147,14 @@ function App() {
     localStorage.clear();
     setGameState('welcome');
     setIsAgeVerified(false);
+    setPlayMode('local');
     setPlayers([]);
     setCurrentPlayerIndex(0);
     setCategory('soft');
     setCurrentChallenge(null);
     setUsedChallenges([]);
     setCustomChallenges([]);
+    setSessionCode('');
   };
 
   if (!isAgeVerified) {
@@ -143,11 +166,24 @@ function App() {
     }
   }
 
+  if (gameState === 'mode-selection') {
+    return <PlayModeSelection onModeSelect={handleModeSelection} />;
+  }
+
   if (gameState === 'setup') {
     return (
       <PlayerSetup 
         onComplete={handlePlayersSetup}
         initialCustomChallenges={customChallenges}
+      />
+    );
+  }
+
+  if (gameState === 'remote-setup') {
+    return (
+      <RemoteGameSetup 
+        onComplete={handleRemotePlayersSetup}
+        onBack={() => setGameState('mode-selection')}
       />
     );
   }
@@ -160,10 +196,18 @@ function App() {
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-3 mb-4">
               <Heart className="w-8 h-8 text-rose-400" />
-              <h1 className="text-3xl md:text-4xl font-bold text-white">Action ou Vérité</h1>
+              <div className="text-center">
+                <h1 className="text-3xl md:text-4xl font-bold text-white">Action ou Vérité</h1>
+                {playMode === 'remote' && sessionCode && (
+                  <p className="text-amber-300 text-sm mt-1">Session: {sessionCode}</p>
+                )}
+              </div>
               <Heart className="w-8 h-8 text-rose-400" />
             </div>
             <p className="text-purple-200 text-lg">Mode {category === 'soft' ? 'Soft' : 'Intense'}</p>
+            {playMode === 'remote' && (
+              <p className="text-amber-200 text-sm">🌐 Jeu à distance</p>
+            )}
           </div>
 
           {/* Score Board */}
