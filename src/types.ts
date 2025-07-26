@@ -1,4 +1,8 @@
-export type GameState = 'welcome' | 'age-verification' | 'setup' | 'game';
+export type AppState = 'welcome' | 'age-verification' | 'game-selection' | 'truth-or-dare' | 'new-game';
+
+export type GameType = 'truth-or-dare' | 'new-game';
+
+export type GameState = 'mode-selection' | 'setup' | 'remote-setup' | 'playing';
 
 export type PlayMode = 'local' | 'remote';
 
