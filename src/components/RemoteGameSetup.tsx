@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Wifi, Copy, Users, Settings, Plus, Trash2, Heart, Check, RefreshCw } from 'lucide-react';
-import { Player, Category, Challenge, CustomChallengeInput, RemoteSession } from '../types';
+import { Wifi, Copy, Users, Settings, Plus, Trash2, Heart, Check, RefreshCw, Home, UserCheck, Clock, Play } from 'lucide-react';
+import { Player, Category, Challenge, CustomChallengeInput, RemoteGameSession } from '../types';
 
 interface RemoteGameSetupProps {
   onComplete: (players: Player[], category: Category, customChallenges: Challenge[], sessionCode: string) => void;
@@ -20,8 +20,10 @@ const RemoteGameSetup: React.FC<RemoteGameSetupProps> = ({ onComplete, onBack })
     text: ''
   });
   const [showCustomForm, setShowCustomForm] = useState(false);
-  const [isWaiting, setIsWaiting] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [session, setSession] = useState<RemoteGameSession | null>(null);
+  const [isHost, setIsHost] = useState(false);
+  const [playerId, setPlayerId] = useState('');
 
   const generateSessionCode = () => {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -32,32 +34,110 @@ const RemoteGameSetup: React.FC<RemoteGameSetupProps> = ({ onComplete, onBack })
     return result;
   };
 
+  const generatePlayerId = () => {
+    return 'player_' + Math.random().toString(36).substr(2, 9);
+  };
+
+  useEffect(() => {
+    setPlayerId(generatePlayerId());
+  }, []);
+
   const handleCreateSession = () => {
-    if (playerName.trim()) {
-      const code = generateSessionCode();
-      setSessionCode(code);
-      setIsWaiting(true);
-      
-      // Simuler l'attente d'un autre joueur
-      setTimeout(() => {
-        const players: Player[] = [
-          { id: 1, name: playerName.trim(), score: 0 },
-          { id: 2, name: 'Joueur 2', score: 0 }
-        ];
-        onComplete(players, category, customChallenges, code);
-      }, 3000);
-    }
+    if (!playerName.trim()) return;
+    
+    const code = generateSessionCode();
+    const newSession: RemoteGameSession = {
+      code,
+      host: {
+        id: playerId,
+        name: playerName.trim(),
+        connected: true,
+        ready: false
+      },
+      category,
+      customChallenges,
+      state: 'waiting-guest'
+    };
+    
+    setSession(newSession);
+    setSessionCode(code);
+    setIsHost(true);
+    
+    // Simuler l'attente d'un invité
+    setTimeout(() => {
+      if (newSession.state === 'waiting-guest') {
+        const guestSession = {
+          ...newSession,
+          guest: {
+            id: 'guest_' + Math.random().toString(36).substr(2, 9),
+            name: 'Joueur Invité',
+            connected: true,
+            ready: false
+          },
+          state: 'waiting-ready' as const
+        };
+        setSession(guestSession);
+      }
+    }, 3000);
   };
 
   const handleJoinSession = () => {
-    if (inputCode.trim() && playerName.trim()) {
-      // Simuler la connexion à une session
-      const players: Player[] = [
-        { id: 1, name: 'Hôte', score: 0 },
-        { id: 2, name: playerName.trim(), score: 0 }
-      ];
-      onComplete(players, 'soft', [], inputCode.trim());
+    if (!inputCode.trim() || !playerName.trim()) return;
+    
+    // Simuler la connexion à une session existante
+    const joinedSession: RemoteGameSession = {
+      code: inputCode.trim(),
+      host: {
+        id: 'host_' + Math.random().toString(36).substr(2, 9),
+        name: 'Hôte',
+        connected: true,
+        ready: false
+      },
+      guest: {
+        id: playerId,
+        name: playerName.trim(),
+        connected: true,
+        ready: false
+      },
+      category: 'soft',
+      customChallenges: [],
+      state: 'waiting-ready'
+    };
+    
+    setSession(joinedSession);
+    setSessionCode(inputCode.trim());
+    setIsHost(false);
+  };
+
+  const handleReady = () => {
+    if (!session) return;
+    
+    const updatedSession = { ...session };
+    
+    if (isHost && updatedSession.host) {
+      updatedSession.host.ready = true;
+    } else if (!isHost && updatedSession.guest) {
+      updatedSession.guest.ready = true;
     }
+    
+    // Vérifier si les deux joueurs sont prêts
+    const bothReady = updatedSession.host?.ready && updatedSession.guest?.ready;
+    if (bothReady) {
+      updatedSession.state = 'ready';
+      
+      // Démarrer le jeu après un court délai
+      setTimeout(() => {
+        const players: Player[] = [
+          { id: 1, name: updatedSession.host!.name, score: 0 },
+          { id: 2, name: updatedSession.guest!.name, score: 0 }
+        ];
+        onComplete(players, updatedSession.category, updatedSession.customChallenges, updatedSession.code);
+      }, 2000);
+    } else {
+      updatedSession.state = 'waiting-ready';
+    }
+    
+    setSession(updatedSession);
   };
 
   const copyToClipboard = async () => {
@@ -93,47 +173,222 @@ const RemoteGameSetup: React.FC<RemoteGameSetupProps> = ({ onComplete, onBack })
 
   const filteredCustomChallenges = customChallenges.filter(c => c.category === category);
 
-  if (isWaiting) {
+  // Zone d'attente commune
+  if (session) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center px-4">
-        <div className="max-w-md w-full text-center">
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-purple-500/20">
-            <div className="animate-spin w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full mx-auto mb-6"></div>
-            
-            <h2 className="text-2xl font-bold text-white mb-4">En attente du partenaire...</h2>
-            
-            <div className="bg-slate-700/50 rounded-lg p-4 mb-6">
-              <p className="text-purple-200 text-sm mb-3">Code de session :</p>
-              <div className="flex items-center gap-3">
-                <div className="flex-1 bg-slate-600 rounded-lg p-3 font-mono text-2xl text-amber-400 text-center tracking-wider">
-                  {sessionCode}
-                </div>
-                <button
-                  onClick={copyToClipboard}
-                  className="p-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
-                  title="Copier le code"
-                >
-                  {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
-                </button>
-              </div>
-            </div>
-            
-            <p className="text-purple-200 text-sm mb-6">
-              Partagez ce code avec votre partenaire pour qu'il/elle puisse vous rejoindre
-            </p>
-            
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 px-4 py-8 safe-area-inset">
+        <div className="max-w-md mx-auto">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6">
             <button
               onClick={onBack}
-              className="w-full bg-slate-600 hover:bg-slate-700 text-white py-3 px-4 rounded-lg transition-colors"
+              className="flex items-center gap-2 px-3 py-2 bg-slate-700 active:bg-slate-800 text-white rounded-lg transition-colors mobile-button touch-action-none"
             >
-              Annuler
+              <Home className="w-4 h-4" />
+              <span className="text-sm">Temple</span>
             </button>
+            <h2 className="text-lg font-bold text-white">Session à Distance</h2>
+            <div className="w-16"></div>
+          </div>
+
+          <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 shadow-2xl border border-purple-500/20">
+            {/* Code de session */}
+            <div className="text-center mb-6">
+              <div className="bg-slate-700/50 rounded-lg p-4 mb-4">
+                <p className="text-purple-200 text-sm mb-2">Code de session :</p>
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 bg-slate-600 rounded-lg p-3 font-mono text-2xl text-amber-400 text-center tracking-wider">
+                    {sessionCode}
+                  </div>
+                  <button
+                    onClick={copyToClipboard}
+                    className="p-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+                  >
+                    {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* État de la session */}
+            <div className="mb-6">
+              <h3 className="text-white font-semibold mb-4 text-center">État de la connexion</h3>
+              
+              {/* Statut des joueurs */}
+              <div className="space-y-3">
+                {/* Hôte */}
+                <div className={`p-4 rounded-lg border-2 ${
+                  session.host?.connected 
+                    ? session.host?.ready 
+                      ? 'border-green-500 bg-green-500/20' 
+                      : 'border-blue-500 bg-blue-500/20'
+                    : 'border-slate-500 bg-slate-500/20'
+                }`}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-3 h-3 rounded-full ${
+                        session.host?.connected ? 'bg-green-400' : 'bg-slate-400'
+                      }`}></div>
+                      <span className="text-white font-medium">
+                        {session.host?.name} {isHost && '(Vous)'}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {session.host?.ready ? (
+                        <div className="flex items-center gap-1 text-green-400">
+                          <UserCheck className="w-4 h-4" />
+                          <span className="text-xs">Prêt</span>
+                        </div>
+                      ) : session.host?.connected ? (
+                        <div className="flex items-center gap-1 text-blue-400">
+                          <Clock className="w-4 h-4" />
+                          <span className="text-xs">En ligne</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1 text-slate-400">
+                          <Clock className="w-4 h-4" />
+                          <span className="text-xs">Hors ligne</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Invité */}
+                <div className={`p-4 rounded-lg border-2 ${
+                  session.guest?.connected 
+                    ? session.guest?.ready 
+                      ? 'border-green-500 bg-green-500/20' 
+                      : 'border-blue-500 bg-blue-500/20'
+                    : 'border-slate-500 bg-slate-500/20'
+                }`}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-3 h-3 rounded-full ${
+                        session.guest?.connected ? 'bg-green-400' : 'bg-slate-400'
+                      }`}></div>
+                      <span className="text-white font-medium">
+                        {session.guest?.name || 'En attente...'} {!isHost && session.guest && '(Vous)'}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {session.guest?.ready ? (
+                        <div className="flex items-center gap-1 text-green-400">
+                          <UserCheck className="w-4 h-4" />
+                          <span className="text-xs">Prêt</span>
+                        </div>
+                      ) : session.guest?.connected ? (
+                        <div className="flex items-center gap-1 text-blue-400">
+                          <Clock className="w-4 h-4" />
+                          <span className="text-xs">En ligne</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1 text-slate-400">
+                          <Clock className="w-4 h-4 animate-spin" />
+                          <span className="text-xs">Connexion...</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Messages d'état */}
+            <div className="text-center mb-6">
+              {session.state === 'waiting-guest' && (
+                <div className="bg-amber-900/30 border border-amber-500/50 rounded-lg p-4">
+                  <div className="animate-spin w-6 h-6 border-2 border-amber-500 border-t-transparent rounded-full mx-auto mb-2"></div>
+                  <p className="text-amber-200 text-sm font-medium">
+                    En attente d'un second joueur...
+                  </p>
+                  <p className="text-amber-100 text-xs mt-1">
+                    Partagez le code de session avec votre partenaire
+                  </p>
+                </div>
+              )}
+
+              {session.state === 'waiting-ready' && (
+                <div className="bg-blue-900/30 border border-blue-500/50 rounded-lg p-4">
+                  <Users className="w-6 h-6 text-blue-400 mx-auto mb-2" />
+                  <p className="text-blue-200 text-sm font-medium">
+                    Tous les joueurs sont connectés !
+                  </p>
+                  <p className="text-blue-100 text-xs mt-1">
+                    Cliquez sur "Prêt" quand vous êtes prêt à jouer
+                  </p>
+                </div>
+              )}
+
+              {session.state === 'ready' && (
+                <div className="bg-green-900/30 border border-green-500/50 rounded-lg p-4">
+                  <div className="animate-pulse">
+                    <Play className="w-6 h-6 text-green-400 mx-auto mb-2" />
+                    <p className="text-green-200 text-sm font-medium">
+                      Démarrage du jeu...
+                    </p>
+                    <p className="text-green-100 text-xs mt-1">
+                      Tous les joueurs sont prêts !
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Boutons d'action */}
+            <div className="space-y-3">
+              {session.state === 'waiting-ready' && session.guest && (
+                <button
+                  onClick={handleReady}
+                  disabled={
+                    (isHost && session.host?.ready) || 
+                    (!isHost && session.guest?.ready)
+                  }
+                  className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 disabled:from-slate-600 disabled:to-slate-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed mobile-button touch-action-none flex items-center justify-center gap-2"
+                >
+                  {((isHost && session.host?.ready) || (!isHost && session.guest?.ready)) ? (
+                    <>
+                      <Check className="w-5 h-5" />
+                      Vous êtes prêt !
+                    </>
+                  ) : (
+                    <>
+                      <UserCheck className="w-5 h-5" />
+                      Je suis prêt
+                    </>
+                  )}
+                </button>
+              )}
+
+              <button
+                onClick={onBack}
+                className="w-full bg-slate-600 hover:bg-slate-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 mobile-button touch-action-none flex items-center justify-center gap-2"
+              >
+                <Home className="w-4 h-4" />
+                Retour au Temple
+              </button>
+            </div>
+
+            {/* Informations de session */}
+            <div className="mt-6 pt-4 border-t border-slate-700">
+              <div className="text-center">
+                <p className="text-slate-400 text-xs">
+                  Mode : {session.category === 'soft' ? 'Soft' : 'Intense'}
+                </p>
+                {session.customChallenges.length > 0 && (
+                  <p className="text-slate-400 text-xs mt-1">
+                    {session.customChallenges.length} défi{session.customChallenges.length > 1 ? 's' : ''} personnalisé{session.customChallenges.length > 1 ? 's' : ''}
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
     );
   }
 
+  // Interface de configuration initiale
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 px-4 py-8 overflow-y-auto">
       <div className="max-w-2xl mx-auto">

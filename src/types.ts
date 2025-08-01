@@ -33,17 +33,29 @@ export interface CustomChallengeInput {
   text: string;
 }
 
-export interface RemoteSession {
+export interface RemoteGameSession {
   code: string;
-  hostId: string;
-  guestId?: string;
-  players: Player[];
+  host: {
+    id: string;
+    name: string;
+    connected: boolean;
+    ready: boolean;
+  };
+  guest?: {
+    id: string;
+    name: string;
+    connected: boolean;
+    ready: boolean;
+  };
   category: Category;
   customChallenges: Challenge[];
-  currentPlayerIndex: number;
-  currentChallenge: Challenge | null;
-  usedChallenges: number[];
-  state: RemoteGameState;
+  state: 'waiting-guest' | 'waiting-ready' | 'ready' | 'playing';
+  gameData?: {
+    players: Player[];
+    currentPlayerIndex: number;
+    currentChallenge: Challenge | null;
+    usedChallenges: number[];
+  };
 }
 
 // Kiffe ou Kiffe Pas types
