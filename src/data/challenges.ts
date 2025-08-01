@@ -408,7 +408,7 @@ export const challenges: Record<Category, Challenge[]> = {
   "type": "truth",
   "category": "intense",
   "text": "Quel moment d'extase aimerais-tu qu'on atteigne ensemble ?"
-}
+},
     
     // Dare actions - Intense
    {
