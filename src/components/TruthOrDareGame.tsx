@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, Users, Trophy, RotateCcw, Check, X, ArrowLeft } from 'lucide-react';
-import { GameState, Player, Challenge, Category, PlayMode } from '../types';
+import { GameState, Player, Challenge, Category } from '../types';
 import { challenges } from '../data/challenges';
-import PlayModeSelection from './PlayModeSelection';
 import PlayerSetup from './PlayerSetup';
-import RemoteGameSetup from './RemoteGameSetup';
 import GameBoard from './GameBoard';
 import WheelSpinner from './WheelSpinner';
 import ScoreBoard from './ScoreBoard';
@@ -14,8 +12,7 @@ interface TruthOrDareGameProps {
 }
 
 const TruthOrDareGame: React.FC<TruthOrDareGameProps> = ({ onBack }) => {
-  const [gameState, setGameState] = useState<GameState>('mode-selection');
-  const [playMode, setPlayMode] = useState<PlayMode>('local');
+  const [gameState, setGameState] = useState<GameState>('setup');
   const [players, setPlayers] = useState<Player[]>([]);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [category, setCategory] = useState<Category>('soft');
@@ -24,7 +21,6 @@ const TruthOrDareGame: React.FC<TruthOrDareGameProps> = ({ onBack }) => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [showWheel, setShowWheel] = useState(false);
   const [customChallenges, setCustomChallenges] = useState<Challenge[]>([]);
-  const [sessionCode, setSessionCode] = useState('');
 
   // Load data from localStorage
   useEffect(() => {
@@ -58,27 +54,10 @@ const TruthOrDareGame: React.FC<TruthOrDareGameProps> = ({ onBack }) => {
     localStorage.setItem('truthOrDare_customChallenges', JSON.stringify(customChallenges));
   }, [customChallenges]);
 
-  const handleModeSelection = (mode: PlayMode) => {
-    setPlayMode(mode);
-    if (mode === 'local') {
-      setGameState('setup');
-    } else {
-      setGameState('remote-setup');
-    }
-  };
-
   const handlePlayersSetup = (setupPlayers: Player[], selectedCategory: Category, customs: Challenge[]) => {
     setPlayers(setupPlayers);
     setCategory(selectedCategory);
     setCustomChallenges(customs);
-    setGameState('playing');
-  };
-
-  const handleRemotePlayersSetup = (setupPlayers: Player[], selectedCategory: Category, customs: Challenge[], code: string) => {
-    setPlayers(setupPlayers);
-    setCategory(selectedCategory);
-    setCustomChallenges(customs);
-    setSessionCode(code);
     setGameState('playing');
   };
 
@@ -141,39 +120,14 @@ const TruthOrDareGame: React.FC<TruthOrDareGameProps> = ({ onBack }) => {
     localStorage.removeItem('truthOrDare_category');
     localStorage.removeItem('truthOrDare_usedChallenges');
     localStorage.removeItem('truthOrDare_customChallenges');
-    setGameState('mode-selection');
-    setPlayMode('local');
+    setGameState('setup');
     setPlayers([]);
     setCurrentPlayerIndex(0);
     setCategory('soft');
     setCurrentChallenge(null);
     setUsedChallenges([]);
     setCustomChallenges([]);
-    setSessionCode('');
   };
-
-  if (gameState === 'mode-selection') {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <div className="container mx-auto px-4 py-6 max-w-4xl">
-          <div className="flex items-center gap-4 mb-8">
-            <button
-              onClick={onBack}
-              className="flex items-center gap-2 px-4 py-2 bg-slate-700 active:bg-slate-800 text-white rounded-lg transition-colors mobile-button touch-action-none"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="text-sm">Retour</span>
-            </button>
-            <div className="flex items-center gap-3">
-              <Heart className="w-8 h-8 text-rose-400" />
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">Action ou Vérité</h1>
-            </div>
-          </div>
-        </div>
-        <PlayModeSelection onModeSelect={handleModeSelection} />
-      </div>
-    );
-  }
 
   if (gameState === 'setup') {
     return (
@@ -181,7 +135,7 @@ const TruthOrDareGame: React.FC<TruthOrDareGameProps> = ({ onBack }) => {
         <div className="container mx-auto px-4 py-6 max-w-4xl">
           <div className="flex items-center gap-4 mb-4">
             <button
-              onClick={() => setGameState('mode-selection')}
+              onClick={onBack}
               className="flex items-center gap-2 px-4 py-2 bg-slate-700 active:bg-slate-800 text-white rounded-lg transition-colors mobile-button touch-action-none"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -196,32 +150,6 @@ const TruthOrDareGame: React.FC<TruthOrDareGameProps> = ({ onBack }) => {
         <PlayerSetup 
           onComplete={handlePlayersSetup}
           initialCustomChallenges={customChallenges}
-        />
-      </div>
-    );
-  }
-
-  if (gameState === 'remote-setup') {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <div className="container mx-auto px-4 py-6 max-w-4xl">
-          <div className="flex items-center gap-4 mb-4">
-            <button
-              onClick={() => setGameState('mode-selection')}
-              className="flex items-center gap-2 px-4 py-2 bg-slate-700 active:bg-slate-800 text-white rounded-lg transition-colors mobile-button touch-action-none"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="text-sm">Retour</span>
-            </button>
-            <div className="flex items-center gap-3">
-              <Heart className="w-6 h-6 text-rose-400" />
-              <h1 className="text-xl sm:text-2xl font-bold text-white">Action ou Vérité</h1>
-            </div>
-          </div>
-        </div>
-        <RemoteGameSetup 
-          onComplete={handleRemotePlayersSetup}
-          onBack={() => setGameState('mode-selection')}
         />
       </div>
     );
@@ -248,9 +176,6 @@ const TruthOrDareGame: React.FC<TruthOrDareGameProps> = ({ onBack }) => {
                 <Heart className="w-6 h-6 text-rose-400" />
               </div>
               <p className="text-purple-200 text-sm">Mode {category === 'soft' ? 'Soft' : 'Intense'}</p>
-              {playMode === 'remote' && sessionCode && (
-                <p className="text-amber-300 text-xs mt-1">Session: {sessionCode}</p>
-              )}
             </div>
             
             <div className="w-16"></div>
