@@ -87,6 +87,7 @@ export interface KiffeSession {
 }
 
 export type KiffeGameState = 'session-setup' | 'adding-phrases' | 'waiting-partner' | 'playing' | 'results';
+export type KiffeGameState = 'session-setup' | 'waiting-partner' | 'playing' | 'results';
 
 export type SwipeDirection = 'kiffe' | 'kiffe-pas';
 
